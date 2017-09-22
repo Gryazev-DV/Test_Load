@@ -1,9 +1,9 @@
 <?php
-$testNumber = $_GET['testNumber'];
-$JSONfile = file_get_contents('Tests/' . $testNumber);
+
+$testName = $_GET['testName'];
+$JSONfile = file_get_contents('Tests/' . $testName);
 $tests = json_decode($JSONfile, true);
 $count = 1;
-
 ?>
 
 <!DOCTYPE html>
@@ -16,21 +16,17 @@ $count = 1;
 			width: 800px;
 			margin-left: 100px;
 		}
-
 		ul {
 			width: 100%;
 			list-style-type: none;
 		}
-
 		li {
 			border-bottom: 1px solid rgba(0,0,0,0.2);
 		}
-
 		.back {
 			display: block;
       padding-top: 30px;
 		}
-
 	</style>
 </head>
 <body>
@@ -39,15 +35,15 @@ $count = 1;
 		<ul>
 			<?php 
 	    for ($i=0; $i < count($tests); $i++) : ?>
-			<li> 
-				<p>Вопрос №<?= $count++ . '. ' . $tests[$i]['question'] ?> </p>
-				<p class="variants"> <? foreach ($tests[$i]['answer'] as $key => $value) : ?>
-					<input type="radio" name="ans<?=$i?>" value="<?=$key?>" required> <?= $value ?> <br>
-				<? endforeach ?>
-				</p>
-	  	</li>
-			<? endfor ?>
-			<input type="submit" value="Проверить"> 
+				<li> 
+					<p>Вопрос №<?= $count++ . '. ' . $tests[$i]['question'] ?> </p>
+					<p class="variants"> <?php foreach ($tests[$i]['answer'] as $key => $value) : ?>
+						<input type="radio" name="ans<?=$i?>" value="<?=$key?>" required> <?= $value ?> <br>
+					<?php endforeach ?>
+					</p>
+		  	</li>
+			<?php endfor ?>
+			<input type="submit" name="submit" value="Проверить"> 
 	  </ul>  
   </form>
 
@@ -64,10 +60,11 @@ $count = 1;
 			$wrong++;
 		}
 	}
-
-	echo 'Правильных ' . $correct . "<br>";
-	echo 'Неправильных ' . $wrong . "<br>";
-
+  
+  if ( isset($_POST['submit']) ) {
+	  echo 'Правильных ' . $correct . "<br>";
+	  echo 'Неправильных ' . $wrong . "<br>";
+  }
 	?>
 
 
@@ -76,4 +73,3 @@ $count = 1;
 	</a>
 </body>
 </html>
-
