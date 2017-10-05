@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 
 $extension = 'json';
 $maxSize = 100000;
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <form method="POST" enctype="multipart/form-data">
-  	File <input type="file" name="myfile"> 
+  	<input type="file" name="myfile"> 
   	<input type="submit" value="SEND">
   	<a href="list.php">
   	  <input type="button" value="Перейти к выбору тестов">

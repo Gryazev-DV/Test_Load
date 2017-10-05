@@ -1,8 +1,29 @@
 <?php
 
-$testName = $_GET['testName'];
-$JSONfile = file_get_contents('Tests/' . $testName);
-$tests = json_decode($JSONfile, true);
+// error_reporting(E_ALL);
+if (isset($_GET['testName'])) {
+	$testName = $_GET['testName'];
+
+	if (file_exists('Tests/' . $testName)) { 
+
+	  $JSONfile = file_get_contents('Tests/' . $testName);
+	  $tests = json_decode($JSONfile, true);
+	} else {
+			echo 'Такого теста нет' . PHP_EOL; ?>
+			<a class="back" href="list.php">
+			<input type="button" value="вернуться к выбору теста"> 
+		  </a> <?php
+			exit;
+	  }
+} else {
+		echo 'Тест не выбран!!' . PHP_EOL; ?>
+		
+		<a class="back" href="list.php">
+	  <input type="button" value="вернуться к выбору теста"> 
+		</a> <?php
+		exit;
+  }
+
 $count = 1;
 ?>
 
@@ -47,25 +68,28 @@ $count = 1;
 	  </ul>  
   </form>
 
-	<?php
+<?php
 	
 	$correct = 0;
 	$wrong = 0;
-
+	  
 	for ($i=0; $i < count($tests); $i++) {
 		// echo $_POST["ans$i"] . " - " . $tests[$i]['correct'] . "<br>" ;  - проверка
-		if ( $_POST["ans$i"] == $tests[$i]['correct'] ) {
-	    $correct++;
-		} else {
-			$wrong++;
-		}
+		if ( isset($_POST["ans$i"]) ) {
+	   	if ( $_POST["ans$i"] == $tests[$i]['correct'] ) {
+	      $correct++;
+	   	} else {
+		   	  $wrong++;
+		 	  } 
+		} 
 	}
-  
-  if ( isset($_POST['submit']) ) {
+
+	if (isset($_POST['submit'])) {
 	  echo 'Правильных ' . $correct . "<br>";
 	  echo 'Неправильных ' . $wrong . "<br>";
-  }
-	?>
+	}
+  
+?>
 
 
 	<a class="back" href="list.php">

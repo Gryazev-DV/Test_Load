@@ -1,6 +1,15 @@
 <?php
-  $list = glob('Tests/*');
-?>
+error_reporting(E_ALL);
+$list = glob('Tests/*');?>
+
+<?php if (empty($list)) : 
+echo 'ни одного теста не загружено'; ?>
+<a href="admin.php">
+<input type="button" value="вернуться к загрузке файлов">
+</a> 
+<?php exit; ?> 
+<?php endif ?>
+ 
 
 <!DOCTYPE html>
 <html lang="en">
